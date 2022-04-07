@@ -11,7 +11,9 @@ const createUserController = async (req: Request, res: Response) => {
 
     return res.status(StatusCodes.CREATED).json(newUser);
   } catch (e) {
-    return res.status(StatusCodes.BAD_REQUEST).json(e);
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "E-mail already registered" });
   }
 };
 

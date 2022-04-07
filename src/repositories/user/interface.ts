@@ -13,6 +13,7 @@ interface UserRepo {
   getAllUsers: () => Promise<UserInterface[]>;
   updateUser: (user: UserInterface) => Promise<UserInterface>;
   deleteUser: (uuid: string) => void;
+  findUserByEmail: (email: string) => Promise<UserInterface>;
 }
 
 export { UserInterface, UserRepo };

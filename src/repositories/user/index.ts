@@ -16,6 +16,9 @@ class UserRepository implements UserRepo {
   updateUser = async (user: UserInterface) => await this.ormRepo.save(user);
 
   deleteUser = async (uuid: string) => await this.ormRepo.delete(uuid);
+
+  findUserByEmail = async (email: string) =>
+    await this.ormRepo.findOne({ where: { email } });
 }
 
 export { UserRepository, User };
