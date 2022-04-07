@@ -1,23 +1,20 @@
 import { Request, Response } from "express";
-import { UserRepository, User } from "../repositories";
+import { User } from "../repositories";
 import { StatusCodes } from "http-status-codes";
 
-const deleteUserController = async (req: Request, res: Response) => {
+const getSpecificUserController = (req: Request, res: Response) => {
   try {
     const user: User = req.user;
-    const { uuid } = req.params;
 
-    if (user.uuid !== uuid && !user.isAdm) {
+    if (!user) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ message: "Missing authorization headers" });
     }
 
-    await new UserRepository().deleteUser(uuid);
+    delete user.password;
 
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "User deleted with success" });
+    return res.status(StatusCodes.OK).json(user);
   } catch (e) {
     return res
       .status(StatusCodes.UNAUTHORIZED)
@@ -25,4 +22,4 @@ const deleteUserController = async (req: Request, res: Response) => {
   }
 };
 
-export default deleteUserController;
+export default getSpecificUserController;

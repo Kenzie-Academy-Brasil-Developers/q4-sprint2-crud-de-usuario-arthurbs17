@@ -8,8 +8,11 @@ import {
   createUserController,
   getAllUsersController,
   loginUserController,
+  getSpecificUserController,
+  updateUserController,
+  deleteUserController,
 } from "./controllers";
-import { userShape, loginShape } from "./shapes";
+import { userShape, loginShape, updateShape } from "./shapes";
 
 const route = Router();
 
@@ -21,5 +24,13 @@ route.get(
   verifyAdminValidation,
   getAllUsersController
 );
+route.get("/users/profile", authenticateToken, getSpecificUserController);
+route.patch(
+  "/users/:uuid",
+  validateShape(updateShape),
+  authenticateToken,
+  updateUserController
+);
+route.delete("/users/:uuid", authenticateToken, deleteUserController);
 
 export default route;

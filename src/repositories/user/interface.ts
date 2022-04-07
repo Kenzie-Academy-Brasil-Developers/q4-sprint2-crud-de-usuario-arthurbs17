@@ -1,3 +1,5 @@
+import { UpdateResult, DeleteResult } from "typeorm";
+
 interface UserInterface {
   uuid: string;
   name: string;
@@ -11,9 +13,10 @@ interface UserInterface {
 interface UserRepo {
   createUser: (user: UserInterface) => Promise<UserInterface>;
   getAllUsers: () => Promise<UserInterface[]>;
-  updateUser: (user: UserInterface) => Promise<UserInterface>;
-  deleteUser: (uuid: string) => void;
+  updateUser: (uuid: string, user: UserInterface) => Promise<UpdateResult>;
+  deleteUser: (uuid: string) => Promise<DeleteResult>;
   findUserByEmail: (email: string) => Promise<UserInterface>;
+  findUserByUuid: (uuid: string) => Promise<UserInterface>;
 }
 
 export { UserInterface, UserRepo };
